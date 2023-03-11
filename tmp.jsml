@@ -1,0 +1,19 @@
+<div>
+    <h1>{push(this.data)}</h1>
+    <h1>{push(data)}</h1>
+    {
+        var data = 42;
+        var str = "asd";
+    }
+    <table>
+        {push(data)}
+        <tbody>
+            {
+                for (let data of smth) {
+                    shift(<tr>{data.title}</tr>);
+                    push(<tr>{data.title}</tr>);
+                }
+            }
+        </tbody>
+    </table>
+</div>
