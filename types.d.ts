@@ -2,27 +2,40 @@ type valueOf<T> = T[ keyof T ];
 
 type tokenKind = valueOf< typeof import("./tokenizer.js").TOKEN_KIND >;
 
-type statement = {
+type innerStatement = {
+    chain: link[];
+}
+
+type statement = innerStatement & {
     primary: boolean;
-    chain: statementMatch[];
 };
 
-type statementMatch = {
+
+type link = ({
+    elements: statementMatch[];
+} & ({
+    optional: true;
+    group: string;
+} | {
+    optional: false;
+}))
+
+type statementMatch = ({
     type: "recursive";
-    value: statement[];
+    value: innerStatement;
 } | {
     type: "plain";
-    value: tokenMatch[];
-};
+    value: tokenMatch;
+});
 
-type tokenMatch = {
+type tokenMatch = ({
+    type: tokenKind;
+} & ({
     match: "exact";
-    type: tokenKind;
     text: string;
-} | {
+} | {  
     match: "any";
-    type: tokenKind;
-};
+}));
 
 type token = {
     text: string,
